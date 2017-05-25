@@ -1,0 +1,176 @@
+Student No.1 Info{     
+First name:Ivan             
+Last name:      Petrov           
+Gender:         Male             
+BirthDate:      19.02.1995       
+Phone:          0875124135       
+Email:          ipetrov@uni.bg   
+Course:         3                
+Specialty:      Telecomunications
+Faculty Number: 91291200         
+Exam List{       
+Exam No.1{
+Name:           Mathematics      
+Lecturer:       Prof. Ronkov     
+Grade:          5                
+}
+
+Exam No.2{
+Name:           Physics          
+Lecturer:       Prof. Koprinkov  
+Grade:          4                
+}
+
+Exam No.3{
+Name:           Australian       
+Lecturer:       doc. Dundy       
+Grade:          6                
+}
+
+Exam No.4{
+Name:           Mechanics        
+Lecturer:       prof. Borovska   
+Grade:          3                
+}
+
+Exam No.5{
+Name:           Programming      
+Lecturer:       prof. Nakov      
+Grade:          5                
+}
+	}//End of Exam list
+}End of Student Info
+
+
+Student No.2 Info{
+First name:     Petar            
+Last name:      Trandov          
+Gender:         Male             
+BirthDate:      09.07.1995       
+Phone:          0983533122       
+Email:          ptrandov@uni.bg  
+Course:         2                
+Specialty:      Practical Mathematics
+Faculty Number: 929292912        
+Exam List{       
+Exam No.1{
+Name:           Mathematics      
+Lecturer:       Prof. Ronkov     
+Grade:          3                
+}
+
+Exam No.2{
+Name:           Physics          
+Lecturer:       Prof. Koprinkov  
+Grade:          4                
+}
+
+Exam No.3{
+Name:           Australian       
+Lecturer:       doc. Dundy       
+Grade:          5                
+}
+
+Exam No.4{
+Name:           Mechanics        
+Lecturer:       prof. Borovska   
+Grade:          6                
+}
+
+Exam No.5{
+Name:           Programming      
+Lecturer:       prof. Nakov      
+Grade:          5                
+}
+	}//End of Exam list
+}End of Student Info
+
+
+Student No.3 Info{
+First name:     Poli             
+Last name:      Sasheva          
+Gender:         Female           
+BirthDate:      01.05.1996       
+Phone:          021414323        
+Email:          psasheva@uni.bg  
+Course:         5                
+Specialty:      Computer Science 
+Faculty Number: 25434352         
+Exam List{       
+Exam No.1{
+Name:           Mathematics      
+Lecturer:       Prof. Ronkov     
+Grade:          2                
+}
+
+Exam No.2{
+Name:           PlaneSyncing     
+Lecturer:       Prof. Koprinkov  
+Grade:          4                
+}
+
+Exam No.3{
+Name:           Cooking          
+Lecturer:       doc. Dundy       
+Grade:          3                
+}
+
+Exam No.4{
+Name:           Swimming         
+Lecturer:       prof. Borovska   
+Grade:          6                
+}
+
+Exam No.5{
+Name:           Driving          
+Lecturer:       prof. Nakov      
+Grade:          5                
+}
+	}//End of Exam list
+}End of Student Info
+
+
+Student No.4 Info{
+First name:     Henry            
+Last name:      Porter           
+Gender:         Unknown          
+BirthDate:      01.01.1900       
+Phone:          3242532          
+Email:          hporter@unknown.com
+Course:         3                
+Specialty:      Magic            
+Faculty Number: 934324           
+Exam List{       
+Exam No.1{
+Name:           LateNight Snacking
+Lecturer:       Prof. Snacky     
+Grade:          4                
+}
+
+Exam No.2{
+Name:           Catching Mice    
+Lecturer:       Prof. Tom        
+Grade:          4                
+}
+
+Exam No.3{
+Name:           Transformation   
+Lecturer:       doc. Dumbledor   
+Grade:          4                
+}
+
+Exam No.4{
+Name:           Flying           
+Lecturer:       prof. Dumbo      
+Grade:          4                
+}
+
+Exam No.5{
+Name:           Programming      
+Lecturer:       prof. Nakov      
+Grade:          4                
+}
+	}//End of Exam list
+}End of Student Info
+
+

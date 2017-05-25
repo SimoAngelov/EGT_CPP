@@ -7,8 +7,6 @@
 
 #ifndef UNIVERSITY_H_
 #define UNIVERSITY_H_
-#include "pugixml.hpp"
-
 #include <vector>
 using std::vector;
 #include "Student.h"
@@ -18,7 +16,6 @@ public:
 	University();
 	static void addStudent(Student&);
 	static void showAllStudents();
-	static void traverseXML();
 	static vector<Student*> getStudents();
 	virtual ~University();
 };
