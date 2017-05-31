@@ -14,6 +14,12 @@ using std::string;
 template <typename T> string formatCurrency(const string&, T);
 string camelCase(string&);
 
+double RoundDouble(double, int);
 
+typedef struct{
+	int quotient;
+	int remainder;
+} structDiv;
 
+structDiv Divide(int, int);
 #endif /* LIBRARYFUNCTIONS_H_ */
