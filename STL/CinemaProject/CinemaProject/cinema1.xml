@@ -1,0 +1,13 @@
+<cinema>
+	<screening>
+		<filmName>SW</filmName>
+		<hall id="1">Blue</hall><capacity>200</capacity>
+		<soldTickets>120</soldTickets>
+		<pricePerTicket>12</pricePerTicket></screening>
+	<screening>
+		<filmName>SW</filmName>
+		<hall id="4">Blue</hall>
+		<capacity>100</capacity>
+		<soldTickets>99</soldTickets>
+		<pricePerTicket>10</pricePerTicket></screening>
+</cinema>
