@@ -10,22 +10,8 @@
 using namespace std;
 #include <vector>
 #include <map>
-
-typedef map<string, vector<int> > cityToTemps;
-typedef multimap<int, string> tempToCity;
-typedef vector<pair<string, int> > VCityTempPairs;
-typedef vector<pair<int, string> > VTempCityPairs;
-typedef vector<VTempCityPairs> VTempsPerCities;
-
-typedef vector<pair<string, int> > VCitiesToCounts;
-typedef vector<pair<int, int> > VDaysToTemps;
-
-//function prototypes
-VCityTempPairs CitiesWithHighestTemp(const VTempCityPairs& vectTempToCity);
-VCityTempPairs ColdestTempPerCities(const VTempsPerCities& vectTempPerCities);
-VCityTempPairs Top5HottestCities(const VTempCityPairs& vectTempToCity);
-VCityTempPairs TimesAbove15DegPerCity(const VTempsPerCities& vectTempPerCities);
-VDaysToTemps DaysToTempFunc(const VTempCityPairs& vectTempToCity);
+#include "UserDefinedFunctions.h"
+#include "MapOperations.h"
 
 
 int main()
@@ -43,17 +29,20 @@ int main()
 	vector<int> varnaTemp(arr3, arr3 + 4);
 
 	//initialize the map of city-temperatures
-	cityToTemps sofiaTemps;
-	sofiaTemps["Sofia"] = sofiaTemp;
-	cityToTemps plovdivTemps;
-	plovdivTemps["Plovdiv"] = plovdivTemp;
-	cityToTemps varnaTemps;
-	varnaTemps["Varna"] = varnaTemp;
+	cityToTemps cityTempsMap;
+	cityTempsMap["Sofia"] = sofiaTemp;
+	cityTempsMap["Plovdiv"] = plovdivTemp;
+	cityTempsMap["Varna"] = varnaTemp;
 
-	//map iterators
-	cityToTemps::iterator cityIt;
+	//map iterator
+	cityToTemps::iterator cityTempsIt;
 
+	//map of city-temp pairs;
+	cityToTemp cityTempMap;
+	//iterator
+	cityToTemp::iterator cityTempIt;
 	//vector of city-temperature pairs
+	VCityTempPairs cityTempPairs;
 	VCityTempPairs sofiaTempPairs;
 	VCityTempPairs plovdivTempPairs;
 	VCityTempPairs varnaTempPairs;
@@ -80,45 +69,34 @@ int main()
 	//vector to store the temp-city pairs for varna
 	VTempCityPairs vectorTempPerVarna;
 
-	//push the temperatures from sofia into a vector of city-temp pairs
-	for (cityIt = sofiaTemps.begin(); cityIt != sofiaTemps.end(); ++cityIt)
+	//push the temperatures from sofia, plovdiv and varna into a map of city-temp pairs
+	for (cityTempsIt = cityTempsMap.begin(); cityTempsIt != cityTempsMap.end(); ++cityTempsIt)
 	{
-		vector<int> vectorTemp = cityIt->second;
+		string cityName = cityTempsIt->first;
+		vector<int> vectorTemp = cityTempsIt->second;
 		vector<int>::iterator tempIt;
 		for (tempIt = vectorTemp.begin(); tempIt != vectorTemp.end(); ++tempIt)
 		{
-			string cityName = cityIt->first;
 			int temp = *tempIt;
-			sofiaTempPairs.push_back(make_pair(cityName, temp));
+			if(cityName == "Sofia")
+			{
+				sofiaTempPairs.push_back(make_pair(cityName, temp));
+			} else if (cityName == "Plovdiv")
+			{
+				plovdivTempPairs.push_back(make_pair(cityName, temp));
+			} else if (cityName == "Varna")
+			{
+				varnaTempPairs.push_back(make_pair(cityName, temp));
+			}
+			cityTempMap.insert(make_pair(cityName, temp));
 		}
 	}
-
-	//push the temperatures from plovdiv into a vector of city-temp pairs
-	for (cityIt = plovdivTemps.begin(); cityIt != plovdivTemps.end(); ++cityIt)
-	{
-		vector<int> vectorTemp = cityIt->second;
-		vector<int>::iterator tempIt;
-		for (tempIt = vectorTemp.begin(); tempIt != vectorTemp.end(); ++tempIt)
-		{
-			string cityName = cityIt->first;
-			int temp = *tempIt;
-			plovdivTempPairs.push_back(make_pair(cityName, temp));
-		}
-	}
-
-	//push the temperatures from varna into a vector of city-temp pairs
-	for (cityIt = varnaTemps.begin(); cityIt != varnaTemps.end(); ++cityIt)
-	{
-		vector<int> vectorTemp = cityIt->second;
-		vector<int>::iterator tempIt;
-		for (tempIt = vectorTemp.begin(); tempIt != vectorTemp.end(); ++tempIt)
-		{
-			string cityName = cityIt->first;
-			int temp = *tempIt;
-			varnaTempPairs.push_back(make_pair(cityName, temp));
-		}
-	}
-
+	cout << "before sort:: " << endl;
+	PrintMultimap(cityTempMap);
+	cout << endl;
+	cout << "after sort:: " << endl;
+	cityTempPairs = SortMultimapByValue(cityTempMap);
+	PrintVectorOfPairs(cityTempPairs);
 	//push the city-temp pairs from sofia into the temp-city multimap
 	for (cityTempPairIt = sofiaTempPairs.begin();
 			cityTempPairIt != sofiaTempPairs.end(); ++cityTempPairIt)
@@ -191,7 +169,7 @@ int main()
 	{
 		int key = sortedIt->first;
 		string val = sortedIt->second;
-//		cout << sortedIt->second << "\t" << sortedIt->first << endl;
+		cout << sortedIt->second << "\t" << sortedIt->first << endl;
 		tempCityPairs.push_back(make_pair(key, val));
 	}
 
@@ -286,120 +264,3 @@ int main()
 
 
 
-VCityTempPairs CitiesWithHighestTemp(const VTempCityPairs& vectTempToCity)
-{
-	int maxTemp = (vectTempToCity.end() - 1)->first;
-	VCityTempPairs result;
-	int size = vectTempToCity.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		string currentCity = vectTempToCity[i].second;
-		int currentTemp = vectTempToCity[i].first;
-
-		if (maxTemp == currentTemp)
-		{
-			result.push_back(make_pair(currentCity, currentTemp));
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	return result;
-}
-
-VCityTempPairs ColdestTempPerCities(const VTempsPerCities& vectTempPerCities)
-{
-	VCityTempPairs result;
-	int size = vectTempPerCities.size();
-	for (int i = 0; i < size; ++i)
-	{
-		string currentCity = vectTempPerCities[i][0].second;
-		int currentTemp = vectTempPerCities[i][0].first;
-		result.push_back(make_pair(currentCity, currentTemp));
-	}
-	return result;
-}
-
-VCityTempPairs Top5HottestCities(const VTempCityPairs& vectTempToCity)
-{
-	VCityTempPairs result;
-	int size = vectTempToCity.size();
-	for (int i = size - 1; i > size - 6; --i)
-	{
-		string currentCity = vectTempToCity[i].second;
-		int currentTemp = vectTempToCity[i].first;
-		result.push_back(make_pair(currentCity, currentTemp));
-	}
-
-	return result;
-}
-
-VCitiesToCounts TimesAbove15DegPerCity(const VTempsPerCities& vectTempPerCities)
-{
-	VCityTempPairs result;
-	string city[3] =
-	{ "Sofia", "Plovdiv", "Varna" };
-	int count[3] =
-	{ 0 };
-	int size = vectTempPerCities.size();
-	for (int i = 0; i < size; i++)
-	{
-		int citySize = vectTempPerCities[i].size();
-		for (int j = 0; j < citySize; j++)
-		{
-			int currentTemp = vectTempPerCities[i][j].first;
-			if (15 < currentTemp)
-			{
-				count[i]++;
-			}
-		}
-	}
-
-	for (int i = 0; i < size; i++)
-	{
-		result.push_back(make_pair(city[i], count[i]));
-	}
-	return result;
-}
-
-VDaysToTemps DaysToTempFunc(const VTempCityPairs& vectTempToCity)
-{
-	VDaysToTemps result;
-	// temp <10
-	// temp <20
-	// temp >=20
-	int days[3] = {0};
-	int temps[2] = {10, 20};
-
-	int size = vectTempToCity.size();
-
-	for(int i = 0; i < size; ++i)
-	{
-		int currentTemp = vectTempToCity[i].first;
-		string currentCity = vectTempToCity[i].second;
-		cout << currentCity << "\t" << currentTemp << " is ";
-		switch(currentTemp / 10){
-		case 0:
-			cout << " <= 10" << endl;
-			days[0]++;
-			break;
-		case 1:
-			cout << " > 10 and <= 20" << endl;
-			days[1]++;
-			break;
-
-		default:
-			cout << " > 20" << endl;
-			days[2]++;
-			//cout << "what did you do?!?" << endl;
-			break;
-		}
-	}
-
-	result.push_back(make_pair(days[0], temps[0]));
-	result.push_back(make_pair(days[1], temps[1]));
-	result.push_back(make_pair(days[2], temps[1]));
-	return result;
-}
