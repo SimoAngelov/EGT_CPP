@@ -13,16 +13,17 @@ using std::make_pair;
 #include <vector>
 using std::vector;
 
-VCityTempPairs CitiesWithHighestTemp(const VTempCityPairs& vectTempToCity)
+VCityTempPairs CitiesWithHighestTemp(const VCityTempPairs& vectCityTemp)
 {
-	int maxTemp = (vectTempToCity.end() - 1)->first;
+	int maxTemp = (vectCityTemp.rbegin())->second;
+	cout << "maxtemp : " << maxTemp << endl;
 	VCityTempPairs result;
-	int size = vectTempToCity.size();
-	for (int i = size - 1; i >= 0; --i)
+	VCityTempPairs::const_reverse_iterator cityTempIt;
+	for(cityTempIt = vectCityTemp.rbegin(); cityTempIt != vectCityTemp.rend();
+			++cityTempIt)
 	{
-		string currentCity = vectTempToCity[i].second;
-		int currentTemp = vectTempToCity[i].first;
-
+		string currentCity = cityTempIt->first;
+		int currentTemp = cityTempIt->second;
 		if (maxTemp == currentTemp)
 		{
 			result.push_back(make_pair(currentCity, currentTemp));
@@ -32,66 +33,73 @@ VCityTempPairs CitiesWithHighestTemp(const VTempCityPairs& vectTempToCity)
 			break;
 		}
 	}
-
 	return result;
 }
 
-VCityTempPairs ColdestTempPerCities(const VTempsPerCities& vectTempPerCities)
+VCityTempPairs ColdestTempPerCities(const cityToTemps& cityTemps)
 {
 	VCityTempPairs result;
-	int size = vectTempPerCities.size();
-	for (int i = 0; i < size; ++i)
+	cityToTemps::const_iterator it;
+	for(it = cityTemps.begin(); it != cityTemps.end(); ++it)
 	{
-		string currentCity = vectTempPerCities[i][0].second;
-		int currentTemp = vectTempPerCities[i][0].first;
-		result.push_back(make_pair(currentCity, currentTemp));
-	}
-	return result;
-}
-
-VCityTempPairs Top5HottestCities(const VTempCityPairs& vectTempToCity)
-{
-	VCityTempPairs result;
-	int size = vectTempToCity.size();
-	for (int i = size - 1; i > size - 6; --i)
-	{
-		string currentCity = vectTempToCity[i].second;
-		int currentTemp = vectTempToCity[i].first;
+		string currentCity = it->first;
+		int currentTemp = it->second[0];
 		result.push_back(make_pair(currentCity, currentTemp));
 	}
 
 	return result;
 }
 
-VCitiesToCounts TimesAbove15DegPerCity(const VTempsPerCities& vectTempPerCities)
+VCityTempPairs Top5HottestCities(const VCityTempPairs& cityTemp)
 {
 	VCityTempPairs result;
+	VCityTempPairs::const_reverse_iterator it;
+	int n = 1;
+	for(it = cityTemp.rbegin(); it != cityTemp.rend(); ++it)
+	{
+		string currentCity = it->first;
+		int currentTemp =  it->second;
+		result.push_back(make_pair(currentCity, currentTemp));
+		if(++n >= 6)
+		{
+			break;
+		}
+	}
+	return result;
+}
+
+VCitiesToCounts TimesAbove15DegPerCity(const cityToTemps& cityTempsVect)
+{
+	VCitiesToCounts result;
 	string city[3] =
 	{ "Sofia", "Plovdiv", "Varna" };
 	int count[3] =
 	{ 0 };
-	int size = vectTempPerCities.size();
-	for (int i = 0; i < size; i++)
-	{
-		int citySize = vectTempPerCities[i].size();
-		for (int j = 0; j < citySize; j++)
+	int i = 0;
+	cityToTemps::const_iterator cityTempsIt;
+	vector<int>::const_iterator vectIt;
+
+	for(cityTempsIt = cityTempsVect.begin(); cityTempsIt != cityTempsVect.end();
+			++cityTempsIt){
+		vector<int> vectorV = cityTempsIt->second;
+		for(vectIt = vectorV.begin(); vectIt != vectorV.end(); ++vectIt)
 		{
-			int currentTemp = vectTempPerCities[i][j].first;
+			int currentTemp = *vectIt;
 			if (15 < currentTemp)
 			{
 				count[i]++;
 			}
 		}
+		result.push_back(make_pair(city[i], count[i]));
+		++i;
 	}
 
-	for (int i = 0; i < size; i++)
-	{
-		result.push_back(make_pair(city[i], count[i]));
-	}
 	return result;
 }
 
-VDaysToTemps DaysToTempFunc(const VTempCityPairs& vectTempToCity)
+
+
+VDaysToTemps DaysToTempFunc(const VCityTempPairs& cityTemp)
 {
 	VDaysToTemps result;
 	// temp <10
@@ -100,31 +108,32 @@ VDaysToTemps DaysToTempFunc(const VTempCityPairs& vectTempToCity)
 	int days[3] = {0};
 	int temps[2] = {10, 20};
 
-	int size = vectTempToCity.size();
+	VCityTempPairs::const_iterator it;
 
-	for(int i = 0; i < size; ++i)
+	for(it = cityTemp.begin(); it != cityTemp.end(); ++it)
 	{
-		int currentTemp = vectTempToCity[i].first;
-		string currentCity = vectTempToCity[i].second;
-		cout << currentCity << "\t" << currentTemp << " is ";
+
+		string currentCity = it->first;
+		int currentTemp = it->second;
+	//	cout << currentCity << "\t" << currentTemp << " is ";
 		switch(currentTemp / 10){
 		case 0:
-			cout << " <= 10" << endl;
+		//	cout << " <= 10" << endl;
 			days[0]++;
 			break;
 		case 1:
-			cout << " > 10 and <= 20" << endl;
+			//cout << " > 10 and <= 20" << endl;
 			days[1]++;
 			break;
 
 		default:
-			cout << " > 20" << endl;
+			//cout << " > 20" << endl;
 			days[2]++;
 			//cout << "what did you do?!?" << endl;
 			break;
 		}
-	}
 
+	}
 	result.push_back(make_pair(days[0], temps[0]));
 	result.push_back(make_pair(days[1], temps[1]));
 	result.push_back(make_pair(days[2], temps[1]));

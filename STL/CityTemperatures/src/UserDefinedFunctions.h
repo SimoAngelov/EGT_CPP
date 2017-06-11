@@ -9,11 +9,11 @@
 #define USERDEFINEDFUNCTIONS_H_
 
 #include "UserDefinedTypes.h"
-VCityTempPairs CitiesWithHighestTemp(const VTempCityPairs& vectTempToCity);
-VCityTempPairs ColdestTempPerCities(const VTempsPerCities& vectTempPerCities);
-VCityTempPairs Top5HottestCities(const VTempCityPairs& vectTempToCity);
-VCityTempPairs TimesAbove15DegPerCity(const VTempsPerCities& vectTempPerCities);
-VDaysToTemps DaysToTempFunc(const VTempCityPairs& vectTempToCity);
+VCityTempPairs CitiesWithHighestTemp(const VCityTempPairs&);
+VCityTempPairs ColdestTempPerCities(const cityToTemps&);
+VCityTempPairs Top5HottestCities(const VCityTempPairs&);
+VCityTempPairs TimesAbove15DegPerCity(const cityToTemps&);
+VDaysToTemps DaysToTempFunc(const VCityTempPairs&);
 
 
 
