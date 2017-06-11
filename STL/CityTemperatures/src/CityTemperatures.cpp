@@ -100,19 +100,6 @@ int main()
 		}
 	}
 
-
-
-
-//	//task5
-//	cout << "task5" << endl;
-//	VDaysToTemps daysToTemp = DaysToTempFunc(tempCityPairs);
-//	cout << daysToTemp[0].first << " days with a temperature below or equal to "
-//			<< daysToTemp[0].second << " degrees." << endl;
-//	cout << daysToTemp[1].first
-//			<< " days with a temperature above 10 and below or equal to "
-//			<< daysToTemp[1].second << " degrees." << endl;
-//	cout << daysToTemp[2].first << " days with a temperature above "
-//			<< daysToTemp[1].second << " degrees." << endl;
 	return 0;
 }
 
